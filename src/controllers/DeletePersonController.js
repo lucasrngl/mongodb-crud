@@ -2,11 +2,17 @@ const People = require("../models/peopleSchema");
 
 class DeletePersonController {
   async handle(req, res) {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    await People.deleteOne({ _id: id });
+      await People.deleteOne({ _id: id });
 
-    return res.status(204).json();
+      return res.status(204).json();
+    } catch (error) {
+      console.error(error);
+
+      return res.status(404).json({ error: "Request failed" });
+    }
   }
 }
 
